@@ -8,7 +8,7 @@ st.set_page_config(
     layout="centered"
 )
 
-API_KEY = "YOUR_API_KEY"
+API_KEY = st.secrets["OPENROUTER_API_KEY"]
 st.title("HR Interview Simulator")
 
 st.markdown("Practice HR interviews with AI-powered feedback.")
