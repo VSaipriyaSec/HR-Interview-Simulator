@@ -9,9 +9,12 @@ st.set_page_config(
 )
 
 API_KEY = st.secrets["OPENROUTER_API_KEY"]
+
 st.title("HR Interview Simulator")
 
 st.markdown("Practice HR interviews with AI-powered feedback.")
+
+st.info("Practice HR interview questions and improve your answers using AI feedback.")
 
 if "history" not in st.session_state:
     st.session_state.history = []
@@ -70,34 +73,46 @@ if st.button("Evaluate Answer"):
         ]
     }
 
-    response = requests.post(
-        url="https://openrouter.ai/api/v1/chat/completions",
-        headers=headers,
-        json=data
-    )
+    with st.spinner("Evaluating your answer..."):
 
-    result = response.json()
+        response = requests.post(
+            url="https://openrouter.ai/api/v1/chat/completions",
+            headers=headers,
+            json=data
+        )
 
-    st.subheader("AI Feedback")
+        result = response.json()
 
-    try:
-        feedback = result["choices"][0]["message"]["content"]
+        st.subheader("🤖 AI Feedback")
 
-        st.success("Evaluation Completed Successfully!")
+        try:
+            feedback = result["choices"][0]["message"]["content"]
 
-        st.write(feedback)
+            st.success("Evaluation Completed Successfully!")
 
-        st.session_state.history.append({
-            "time": datetime.datetime.now().strftime("%H:%M:%S"),
-            "question": question,
-            "answer": answer,
-            "feedback": feedback
-        })
+            st.write(feedback)
 
-    except:
-        st.error(result)
+            st.download_button(
+                label="Download Feedback",
+                data=feedback,
+                file_name="feedback.txt",
+                mime="text/plain"
+            )
 
-st.subheader("Previous Attempts")
+            st.session_state.history.append({
+                "time": datetime.datetime.now().strftime("%H:%M:%S"),
+                "question": question,
+                "answer": answer,
+                "feedback": feedback
+            })
+
+        except:
+            st.error(result)
+
+st.divider()
+if st.button("Clear History"):
+    st.session_state.history = []
+st.subheader("📜 Previous Attempts")
 
 for item in st.session_state.history:
 
@@ -108,3 +123,5 @@ for item in st.session_state.history:
 
         st.write("**Feedback:**")
         st.write(item["feedback"])
+st.markdown("---")
+st.caption("Developed by V Saipriya PDKV")
