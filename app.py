@@ -64,7 +64,7 @@ if st.button("Evaluate Answer"):
     }
 
     data = {
-        "model": "openai/gpt-3.5-turbo",
+        "model": "openrouter/auto",
         "messages": [
             {
                 "role": "user",
