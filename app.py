@@ -8,8 +8,7 @@ st.set_page_config(
     layout="centered"
 )
 
-API_KEY = st.secrets["OPENROUTER_API_KEY"]
-
+API_KEY = "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"
 st.title("HR Interview Simulator")
 
 st.markdown("Practice HR interviews with AI-powered feedback.")
@@ -64,7 +63,7 @@ if st.button("Evaluate Answer"):
     }
 
     data = {
-        "model": "openai/gpt-3.5-turbo",
+        "model": "openrouter/auto",
         "messages": [
             {
                 "role": "user",
