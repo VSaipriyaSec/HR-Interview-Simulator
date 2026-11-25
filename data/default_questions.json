@@ -1,0 +1,64 @@
+{
+  "Software Engineer": {
+    "HR & Background": [
+      "Tell me about yourself and what inspired you to pursue software engineering.",
+      "Where do you see your engineering career in 3 to 5 years?",
+      "Why do you want to join our engineering team specifically?"
+    ],
+    "Technical & Domain": [
+      "Can you explain the difference between a process and a thread, and when you would use multithreading?",
+      "How does indexing improve SQL database query performance, and what are its trade-offs?",
+      "Explain the concept of RESTful APIs and the key HTTP methods used in web services."
+    ],
+    "Behavioral (STAR Method)": [
+      "Describe a challenging bug you encountered in a project and how you diagnosed and resolved it.",
+      "Tell me about a time you had to work with tight deadlines or under pressure to deliver a software feature.",
+      "Describe an instance where you disagreed with a teammate on technical implementation and how you reached consensus."
+    ]
+  },
+  "Frontend Developer": {
+    "HR & Background": [
+      "Tell me about yourself and your journey into frontend development.",
+      "What frontend technologies and frameworks do you enjoy working with the most?"
+    ],
+    "Technical & Domain": [
+      "Explain the Virtual DOM and how reconciliation works in modern frontend libraries.",
+      "How do you optimize web page load times and ensure responsive design across devices?",
+      "What is the difference between state and props in component-based architectures?"
+    ],
+    "Behavioral (STAR Method)": [
+      "Tell me about a time you turned complex visual UI designs into working frontend components.",
+      "Describe a situation where a user reported an interface bug and how you handled it."
+    ]
+  },
+  "Data Analyst": {
+    "HR & Background": [
+      "Tell me about yourself and what drew you to data analysis.",
+      "How do you stay updated with emerging data analysis tools and methodologies?"
+    ],
+    "Technical & Domain": [
+      "What is the difference between an INNER JOIN, LEFT JOIN, and FULL OUTER JOIN in SQL?",
+      "How do you identify and handle missing or outlier values during data exploratory analysis?",
+      "Explain the difference between correlation and causation with a real-world example."
+    ],
+    "Behavioral (STAR Method)": [
+      "Describe a time when your data analysis directly influenced a business or technical decision.",
+      "Tell me about a situation where you had to explain technical data findings to a non-technical stakeholder."
+    ]
+  },
+  "General": {
+    "HR & Background": [
+      "Tell me about yourself.",
+      "What are your greatest professional strengths and weaknesses?",
+      "Why should we hire you for this position?"
+    ],
+    "Technical & Domain": [
+      "Can you describe the architecture of your most recent project?",
+      "What tools and version control workflows do you use during development?"
+    ],
+    "Behavioral (STAR Method)": [
+      "Describe a challenge you faced during a project and how you overcame it.",
+      "Tell me about a time you worked in a cross-functional team to achieve a goal."
+    ]
+  }
+}

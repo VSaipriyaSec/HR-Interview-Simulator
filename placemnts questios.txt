@@ -1,0 +1,176 @@
+Good morning sir/madam.
+
+Iam  Saipriya pursuing my Bachelor’s degree in Computer Science and Engineering, and I have a CGPA of 8.85.
+
+I have a good foundation in programming with skills in Java, SQL, HTML, CSS, and JavaScript, along with basic knowledge of AWS Cloud concepts. I am also practicing Data Structures and Algorithms to improve my problem-solving skills.
+
+I consider myself a disciplined, quick learner and a consistent person who is willing to learn new technologies and adapt to different environments.
+
+My goal is to start my career in a reputed organization where I can improve my technical skills, gain real-time industry experience, and contribute effectively to the team.
+
+Thank you.
+
+
+
+
+My project is an HR Management System developed using Node.js, Express.js, MySQL, HTML, CSS and JavaScript.
+
+The main objective of the project is to automate HR-related activities such as employee management, attendance tracking, leave management, holiday management and notifications.
+
+The system supports two roles: Admin and Employee. First, users log in using their Employee ID and password. Based on their role, they are redirected to their respective dashboard.
+
+In the Employee Management module, admins can add, view and search employee details such as department, designation, contact information and employment details.
+
+In the Attendance module, employees can clock in and clock out. The system records the sign-in and sign-out times and automatically calculates the total working hours.
+
+In the Leave Management module, employees can apply for leave and admins can approve or reject leave requests. I have also implemented validation to prevent duplicate or overlapping leave applications.
+
+The Holiday Management module allows administrators to maintain the organization's holiday calendar.
+
+Additionally, I implemented a Notification System that automatically sends notifications when leave requests are submitted, approved or rejected.
+
+The backend is built using Express.js REST APIs and MySQL is used as the database for storing employee, attendance, leave and holiday records.
+
+Through this project, I gained practical experience in full-stack development, REST API development, database design and integration between frontend and backend systems."
+
+If interviewer asks: "What was your role?"
+
+"I was responsible for designing the database, developing the backend APIs using Node.js and Express.js, integrating MySQL, and implementing modules such as login, employee management, attendance, leave management and notifications."
+
+If interviewer asks: "What challenges did you face?"
+
+"One challenge was preventing duplicate leave requests. I solved it by checking for overlapping leave dates before storing a new leave application. Another challenge was calculating employee working hours accurately from clock-in and clock-out times."                                                                
+
+
+
+My project is HR Interview Simulator, an AI-powered web application developed using Python and Streamlit.
+
+The main objective of this project is to help users practice HR interview questions and improve their interview performance. Users can select a question, submit their answer, and receive AI-generated feedback.
+
+For the frontend, I used Streamlit, and for the backend logic, I used Python. I integrated the OpenRouter API to connect with an AI model that evaluates user responses.
+
+The AI provides a score, identifies strengths and weaknesses, and suggests an improved answer. I also implemented a history dashboard to track previous interview attempts.
+
+Through this project, I gained hands-on experience in API integration, prompt engineering, deployment, debugging, and GitHub version control. The application was successfully deployed on Streamlit Cloud.
+
+Follow-up Questions Kandipa Varum
+Q1. Why did you choose this project?
+
+Answer:
+
+Many students feel nervous during HR interviews and do not get proper feedback. So I wanted to create an AI-based solution that allows users to practice anytime and receive instant feedback.
+
+Q2. What was your role?
+
+Answer:
+
+I was involved in designing the Streamlit interface, integrating the OpenRouter API, writing prompts for AI evaluation, implementing score generation, maintaining history tracking, testing, and deployment.
+
+Q3. Explain the Architecture
+
+Interview-la board-la kooda draw panna sollalam.
+
+User
+ ↓
+Streamlit UI
+ ↓
+Python Backend
+ ↓
+OpenRouter API
+ ↓
+AI Model
+ ↓
+Feedback Response
+ ↓
+User
+
+Ithu un document-la mention pannirukku.
+
+Q4. What challenges did you face?
+
+Answer:
+
+Initially, AI responses were inconsistent. I improved the prompts to generate structured feedback such as scores, strengths, weaknesses, and suggested answers. I also faced deployment and API integration issues, which I resolved through testing and debugging.
+
+Q5. What is Prompt Engineering?
+
+Answer:
+
+Prompt engineering is the process of designing effective instructions for an AI model to generate accurate and structured responses.
+
+Q6. Future Enhancements?
+
+Answer:
+
+I would like to add voice-based interviews, resume analysis, role-specific interview questions, and performance analytics using AI.
+
+
+
+
+
+
+
+
+My project is Combat Calc, a smart boxing headgear designed to improve fairness and safety in combat sports.
+
+The main problem we identified was that boxing matches often depend on human judgment, which can lead to biased scoring and missed injury detection. To solve this, we developed a wearable system that can automatically detect punch force, punch direction, and head impacts in real time.
+
+The hardware consists of an Arduino Uno, MPU6050 accelerometer and gyroscope, FSR sensors, Bluetooth module, buzzer, and LED indicators. The FSR sensors detect punch force from different directions, while the MPU6050 tracks head movement and possible knockback events.
+
+When a punch is detected, the sensor data is processed by the microcontroller and transmitted wirelessly through Bluetooth. High-impact events trigger alerts and can be used for objective scoring and athlete safety monitoring.
+
+Through this project, I gained experience in embedded systems, sensor integration, hardware debugging, wireless communication, and real-time data processing. The future goal is to integrate AI analytics and advanced injury prediction features for professional sports applications.
+
+Interviewer Follow-up Questions
+
+Q: Why did you choose this project?
+
+Boxing scoring is often subjective. We wanted to create a low-cost wearable solution that provides objective and data-driven scoring while improving athlete safety.
+
+Q: What is your contribution?
+
+I worked on sensor integration, hardware setup, testing, data collection, debugging, and validating the punch detection workflow.
+
+Q: Why MPU6050?
+
+MPU6050 contains both an accelerometer and gyroscope, allowing us to measure movement, orientation, and head impacts accurately.
+
+Q: Why FSR sensors?
+
+FSR (Force Sensitive Resistor) sensors can detect pressure and impact force, making them suitable for punch detection.
+
+Q: Challenges faced?
+
+Sensor calibration, reducing false detections, maintaining comfort inside the headgear, and ensuring durability during repeated impacts.
+
+Q: Future Enhancement?
+
+AI-based punch classification, injury prediction, cloud analytics, mobile app integration, and automatic match scoring.
+
+One-line Summary (Very Useful)
+
+"Combat Calc is a smart wearable boxing headgear that uses sensors and embedded systems to detect punches, monitor head impacts, and provide fair, data-driven scoring."
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+s
