@@ -1,126 +1,139 @@
+
 import streamlit as st
-import requests
-import datetime
+
+from src.storage.db import init_db
+
+from src.ui.components import apply_custom_css
+from src.ui.auth_view import show_auth
+from src.ui.dashboard_view import show_dashboard
+from src.ui.setup_view import show_setup
+from src.ui.interview_view import show_interview
+from src.ui.evaluation_view import show_evaluation
+from src.ui.analytics_view import show_analytics
+
+
+# --------------------------------------------------
+# 1. PAGE CONFIGURATION
+# --------------------------------------------------
 
 st.set_page_config(
     page_title="HR Interview Simulator",
-    page_icon="💼",
-    layout="centered"
+    page_icon="🎯",
+    layout="wide",
+    initial_sidebar_state="expanded",
 )
 
-API_KEY = st.secrets["API_KEY"]
-st.title("HR Interview Simulator")
 
-st.markdown("Practice HR interviews with AI-powered feedback.")
+# --------------------------------------------------
+# 2. INITIALIZE APPLICATION
+# --------------------------------------------------
 
-st.info("Practice HR interview questions and improve your answers using AI feedback.")
+init_db()
 
-if "history" not in st.session_state:
-    st.session_state.history = []
 
-questions = [
-    "Tell me about yourself.",
-    "What are your strengths?",
-    "What are your weaknesses?",
-    "Why should we hire you?",
-    "Describe a challenge you faced.",
-    "Where do you see yourself in 5 years?",
-    "Why do you want this job?",
-    "Tell me about a time you worked in a team.",
-    "How do you handle pressure?",
-    "Describe a leadership experience."
-]
+# --------------------------------------------------
+# 3. AUTHENTICATION CHECK
+# --------------------------------------------------
 
-question = st.selectbox("Choose Interview Question", questions)
+if not st.session_state.get("authenticated", False):
+    show_auth()
+    st.stop()
 
-answer = st.text_area("Type your answer")
 
-st.caption("Try answering in 3-5 sentences for better evaluation.")
+# --------------------------------------------------
+# 4. INITIALIZE PAGE
+# --------------------------------------------------
 
-if st.button("Evaluate Answer"):
+if "page" not in st.session_state:
+    st.session_state["page"] = "dashboard"
 
-    prompt = f"""
-    You are an HR interviewer.
 
-    Evaluate this answer.
+# --------------------------------------------------
+# 5. APPLY STREAMLIT THEME-AWARE CSS
+# --------------------------------------------------
 
-    Question:
-    {question}
+apply_custom_css()
 
-    Answer:
-    {answer}
 
-    Give:
-    1. Score out of 10
-    2. Strengths
-    3. Weaknesses
-    4. Better answer
-    """
+# --------------------------------------------------
+# 6. SIDEBAR NAVIGATION
+# --------------------------------------------------
 
-    headers = {
-        "Authorization": f"Bearer {API_KEY}",
-        "Content-Type": "application/json"
-    }
+with st.sidebar:
 
-    data = {
-        "model": "openrouter/auto",
-        "messages": [
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ]
-    }
+    st.title("🎯 HR Simulator")
+    st.caption("AI-Powered Interview Practice")
 
-    with st.spinner("Evaluating your answer..."):
-
-        response = requests.post(
-            url="https://openrouter.ai/api/v1/chat/completions",
-            headers=headers,
-            json=data
+    if "user" in st.session_state:
+        st.caption(
+            f"Welcome, {st.session_state['user']['name']}!"
         )
 
-        result = response.json()
+    st.divider()
 
-        st.subheader("🤖 AI Feedback")
+    st.subheader("Navigation")
 
-        try:
-            feedback = result["choices"][0]["message"]["content"]
+    navigation_items = [
+        ("dashboard", "📊 Dashboard"),
+        ("setup", "🚀 New Interview"),
+        ("interview", "🎤 Live Interview"),
+        ("evaluation", "📋 Evaluation"),
+        ("analytics", "📈 History & Analytics"),
+    ]
 
-            st.success("Evaluation Completed Successfully!")
+    for page_id, label in navigation_items:
 
-            st.write(feedback)
+        is_current_page = (
+            st.session_state["page"] == page_id
+        )
 
-            st.download_button(
-                label="Download Feedback",
-                data=feedback,
-                file_name="feedback.txt",
-                mime="text/plain"
-            )
+        if st.button(
+            label,
+            key=f"nav_{page_id}",
+            use_container_width=True,
+            type="primary" if is_current_page else "secondary",
+        ):
+            st.session_state["page"] = page_id
+            st.rerun()
 
-            st.session_state.history.append({
-                "time": datetime.datetime.now().strftime("%H:%M:%S"),
-                "question": question,
-                "answer": answer,
-                "feedback": feedback
-            })
+    st.divider()
 
-        except:
-            st.error(result)
+    # LOGOUT
+    if st.button(
+        "🚪 Logout",
+        key="logout_button",
+        use_container_width=True,
+    ):
+        st.session_state.clear()
+        st.rerun()
 
-st.divider()
-if st.button("Clear History"):
-    st.session_state.history = []
-st.subheader("📜 Previous Attempts")
+    st.divider()
 
-for item in st.session_state.history:
+    st.caption("HR Interview Simulator")
+    st.caption("Developed by V Saipriya")
 
-    with st.expander(f"{item['time']} - {item['question']}"):
 
-        st.write("**Your Answer:**")
-        st.write(item["answer"])
+# --------------------------------------------------
+# 7. PAGE ROUTING
+# --------------------------------------------------
 
-        st.write("**Feedback:**")
-        st.write(item["feedback"])
-st.markdown("---")
-st.caption("Developed by V Saipriya PDKV")
+current_page = st.session_state["page"]
+
+if current_page == "dashboard":
+    show_dashboard()
+
+elif current_page == "setup":
+    show_setup()
+
+elif current_page == "interview":
+    show_interview()
+
+elif current_page == "evaluation":
+    show_evaluation()
+
+elif current_page == "analytics":
+    show_analytics()
+
+else:
+    st.session_state["page"] = "dashboard"
+    st.rerun()

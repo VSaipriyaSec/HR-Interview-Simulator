@@ -1,3 +1,4 @@
+
 """
 Interview Domain Data Models.
 Uses Python dataclasses for type safety, validation, and serialization.
@@ -12,6 +13,7 @@ import uuid
 @dataclass
 class TokenUsageRecord:
     """Tracks token consumption and API costs for observability."""
+
     prompt_tokens: int = 0
     completion_tokens: int = 0
     total_tokens: int = 0
@@ -24,6 +26,7 @@ class TokenUsageRecord:
 @dataclass
 class InterviewQuestion:
     """Represents an interview question generated for the candidate."""
+
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     question_index: int = 1
     category: str = "HR & Background"
@@ -41,13 +44,15 @@ class InterviewQuestion:
 @dataclass
 class InterviewSession:
     """Represents a complete interview session with settings and progress."""
+
     session_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    user_id: Optional[int] = None
     role: str = "Software Engineer"
     experience_level: str = "Fresher / Entry Level (0 - 1 years)"
     difficulty: str = "Medium"
     total_questions: int = 5
     current_question_index: int = 0
-    status: str = "in_progress"  # in_progress, completed, abandoned
+    status: str = "in_progress"
     created_at: str = field(default_factory=lambda: datetime.now().isoformat())
     completed_at: Optional[str] = None
     resume_summary: Optional[str] = None
@@ -55,8 +60,7 @@ class InterviewSession:
     total_tokens: TokenUsageRecord = field(default_factory=TokenUsageRecord)
 
     def to_dict(self) -> Dict[str, Any]:
-        data = asdict(self)
-        return data
+        return asdict(self)
 
     @property
     def is_finished(self) -> bool:

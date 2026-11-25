@@ -7,6 +7,7 @@ JSON parsing, prompt templates, and interview engine sequencing.
 import os
 import sys
 import gc
+import sqlite3
 import tempfile
 import unittest
 from pathlib import Path
@@ -40,10 +41,22 @@ from src.core.interview_engine import InterviewEngine
 class TestStage2Engine(unittest.TestCase):
 
     def setUp(self):
-        """Creates an isolated temporary SQLite database for every test."""
+        """Create an isolated temporary database and test user."""
+
         self.temp_dir = tempfile.TemporaryDirectory()
         self.db_path = Path(self.temp_dir.name) / "test_history.db"
+
         init_db(self.db_path)
+
+        with sqlite3.connect(str(self.db_path)) as conn:
+            cursor = conn.execute(
+                """
+                INSERT INTO users (name, email, password_hash)
+                VALUES (?, ?, ?)
+                """,
+                ("Test User", "stage2@example.com", "test_hash"),
+            )
+            self.user_id = cursor.lastrowid
 
     def tearDown(self):
         """Cleans up temporary test files with garbage collection."""
@@ -60,7 +73,7 @@ class TestStage2Engine(unittest.TestCase):
             role="Software Engineer",
             experience_level="Fresher / Entry Level (0 - 1 years)",
             difficulty="Medium",
-            total_questions=3
+            total_questions=3,
         )
         self.assertEqual(session.role, "Software Engineer")
         self.assertEqual(session.status, "in_progress")
@@ -76,10 +89,10 @@ class TestStage2Engine(unittest.TestCase):
             difficulty="Hard",
             total_questions=2
         )
-        save_session(session, self.db_path)
+        save_session(session, self.db_path, user_id=self.user_id)
 
         # Retrieve and verify
-        loaded = get_session("test_sess_001", self.db_path)
+        loaded = get_session("test_sess_001", self.db_path, user_id=self.user_id)
         self.assertIsNotNone(loaded)
         self.assertEqual(loaded.role, "Backend Developer")
         self.assertEqual(loaded.total_questions, 2)
@@ -92,19 +105,19 @@ class TestStage2Engine(unittest.TestCase):
             question_text="Explain database connection pooling.",
             target_competency="Database Architecture"
         )
-        save_question("test_sess_001", q1, self.db_path)
+        save_question("test_sess_001", q1, self.db_path, user_id=self.user_id)
 
         # Record answer
-        update_question_answer("q_001", "Connection pooling maintains active DB connections...", self.db_path)
+        update_question_answer("q_001", "Connection pooling maintains active DB connections...", self.db_path, user_id=self.user_id)
 
         # Check session reload with question
-        reloaded = get_session("test_sess_001", self.db_path)
+        reloaded = get_session("test_sess_001", self.db_path, user_id=self.user_id)
         self.assertEqual(len(reloaded.questions), 1)
         self.assertEqual(reloaded.questions[0].user_answer, "Connection pooling maintains active DB connections...")
 
         # Update session status
-        update_session_status("test_sess_001", "completed", self.db_path)
-        completed_session = get_session("test_sess_001", self.db_path)
+        update_session_status("test_sess_001", "completed", self.db_path, user_id=self.user_id)
+        completed_session = get_session("test_sess_001", self.db_path, user_id=self.user_id)
         self.assertEqual(completed_session.status, "completed")
         self.assertIsNotNone(completed_session.completed_at)
 
@@ -117,7 +130,7 @@ class TestStage2Engine(unittest.TestCase):
             difficulty="Easy",
             total_questions=1
         )
-        save_session(session, self.db_path)
+        save_session(session, self.db_path, user_id=self.user_id)
 
         log_token_usage(
             session_id="test_sess_token",
@@ -128,7 +141,7 @@ class TestStage2Engine(unittest.TestCase):
             estimated_cost=0.00045,
             db_path=self.db_path
         )
-        stats = get_token_analytics(self.db_path)
+        stats = get_token_analytics(self.db_path, user_id=self.user_id)
         self.assertEqual(stats["total_calls"], 1)
         self.assertEqual(stats["total_prompt_tokens"], 100)
         self.assertEqual(stats["total_completion_tokens"], 50)
@@ -205,7 +218,8 @@ class TestStage2Engine(unittest.TestCase):
             role="Software Engineer",
             experience_level="Fresher / Entry Level (0 - 1 years)",
             difficulty="Easy",
-            total_questions=3
+            total_questions=3,
+            user_id=self.user_id,
         )
         # Q1 should be HR
         q1 = engine.generate_next_question(session)
