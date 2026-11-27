@@ -1,4 +1,3 @@
-
 import streamlit as st
 
 from src.storage.db import init_db
@@ -32,7 +31,16 @@ init_db()
 
 
 # --------------------------------------------------
-# 3. AUTHENTICATION CHECK
+# 3. APPLY VISUAL THEME
+# --------------------------------------------------
+
+# Apply styling before authentication so the login and registration
+# screens use the same visual theme as the main application.
+apply_custom_css()
+
+
+# --------------------------------------------------
+# 4. AUTHENTICATION CHECK
 # --------------------------------------------------
 
 if not st.session_state.get("authenticated", False):
@@ -41,18 +49,11 @@ if not st.session_state.get("authenticated", False):
 
 
 # --------------------------------------------------
-# 4. INITIALIZE PAGE
+# 5. INITIALIZE PAGE
 # --------------------------------------------------
 
 if "page" not in st.session_state:
     st.session_state["page"] = "dashboard"
-
-
-# --------------------------------------------------
-# 5. APPLY STREAMLIT THEME-AWARE CSS
-# --------------------------------------------------
-
-apply_custom_css()
 
 
 # --------------------------------------------------
